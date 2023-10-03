@@ -64,19 +64,17 @@ public class SignUpFrame extends JFrame {
         // nameFrame.setBounds(100, 300, 100, 30);
         contentPanel.add(nameFrame, BorderLayout.NORTH);
 
-        data = new String[]{"email:", "First name: ", "Last name:", "User name: ", "Phone number: ", "Password: ", "Confirm Password: "};
+        data = new String[]{"Email:", "First name: ", "Last name:", "User name: ", "Phone number: ", "Password: ", "Confirm Password: "};
         inputPanel = new JPanel();
-        //inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
         inputPanel.setBackground(Color.WHITE);
 
-      //  inputPanel.add(Box.createVerticalStrut(45));
-        //inputPanel.setLayout(new GridLayout(14, 1)); // Создаем панель с сеткой 7x2
         labels = new ArrayList<>();
         textFields = new ArrayList<>();
 
         for (int i = 1; i < 7; i++) {
             JLabel label = new JLabel(data[i]);
+            assert customFont != null;
             label.setFont(customFont.deriveFont(25f));
             label.setForeground(Color.DARK_GRAY);
             JTextField textField = new JTextField(); // 20 - предполагаемая ширина поля в символах
@@ -105,29 +103,6 @@ public class SignUpFrame extends JFrame {
 
         contentPanel.add(register);
         contentPanel.add(cancel);
-
-
-//
-//        // Создаем список для хранения JLabel и JTextField
-//        List<JLabel> labels = new ArrayList<>();
-//        List<JTextField> textFields = new ArrayList<>();
-//
-//        // Создаем 7 пар JLabel и JTextField и добавляем их в список
-//        for (int i = 1; i <= 7; i++) {
-//            JLabel label = new JLabel("Поле " + i + ": ");
-//            JTextField textField = new JTextField(20); // 20 - предполагаемая ширина поля в символах
-//            labels.add(label);
-//            textFields.add(textField);
-//        }
-//
-//        // Добавляем JLabel и JTextField на панель
-//        for (int i = 0; i < 7; i++) {
-//            panel.add(labels.get(i));
-//            panel.add(textFields.get(i));
-//        }
-//
-//        frame.add(panel);
-
 
 
 

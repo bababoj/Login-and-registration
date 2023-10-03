@@ -1,6 +1,8 @@
 import Frames.LogInFrame;
 import Frames.SignUpFrame;
 
+import javax.swing.*;
+
 public class LogicManager {
 
 
@@ -44,6 +46,40 @@ public class LogicManager {
     }
 
     private void registerUser() {
+//
+//        String name = tfName.getText();
+//        String email = tfEmail.getText();
+//        String phone = tfPhone.getText();
+//        String address = tfAddress.getText();
+//        String password = String.valueOf(pfPassword.getPassword());
+//        String confirmPassword = String.valueOf(pfConfirmPassword.getPassword());
+//
+//        if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty() || password.isEmpty()) {
+//            JOptionPane.showMessageDialog(this,
+//                    "Please enter all fields",
+//                    "Try again",
+//                    JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//
+//        if (!password.equals(confirmPassword)) {
+//            JOptionPane.showMessageDialog(this,
+//                    "Confirm Password does not match",
+//                    "Try again",
+//                    JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//
+//        user = addUserToDatabase(name, email, phone, address, password);
+//        if (user != null) {
+//            dispose();
+//        }
+//        else {
+//            JOptionPane.showMessageDialog(this,
+//                    "Failed to register new user",
+//                    "Try again",
+//                    JOptionPane.ERROR_MESSAGE);
+//        }
 
     }
 

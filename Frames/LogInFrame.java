@@ -59,7 +59,6 @@ public class LogInFrame extends JFrame {
        // nameFrame.setBounds(100, 300, 100, 30);
         contentPanel.add(nameFrame, BorderLayout.NORTH);
 
-
         inputPanel = new JPanel();
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
         inputPanel.setBackground(Color.WHITE);

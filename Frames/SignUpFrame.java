@@ -17,7 +17,9 @@ public class SignUpFrame extends JFrame {
     private JPanel contentPanel;
     private JPanel colorStripe;
     private JPanel inputPanel;
+    @Getter
     private List<JLabel> labels;
+    @Getter
     private List<JTextField> textFields;
     @Getter
     private JButton register;
@@ -43,7 +45,7 @@ public class SignUpFrame extends JFrame {
             e.printStackTrace();
         }
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(500, 600);
+        setSize(500, 640);
         setLocationRelativeTo(null);
 
         colorStripe = new JPanel();
@@ -72,22 +74,22 @@ public class SignUpFrame extends JFrame {
         labels = new ArrayList<>();
         textFields = new ArrayList<>();
 
-        for (int i = 1; i < 7; i++) {
+        for (int i = 0; i < 7; i++) {
             JLabel label = new JLabel(data[i]);
             assert customFont != null;
             label.setFont(customFont.deriveFont(25f));
             label.setForeground(Color.DARK_GRAY);
-            JTextField textField = new JTextField(); // 20 - предполагаемая ширина поля в символах
-            textField.setPreferredSize(new Dimension(140, 30));
-            textField.setFont( textField.getFont().deriveFont(20f));
             labels.add(label);
+            JTextField textField = new JTextField();
+            textField.setPreferredSize(new Dimension(140, 30));
+            textField.setFont(textField.getFont().deriveFont(20f));
             textFields.add(textField);
         }
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 7; i++) {
             inputPanel.add(labels.get(i));
             inputPanel.add(textFields.get(i));
         }
-        inputPanel.add(Box.createVerticalStrut(45));
+        inputPanel.add(Box.createVerticalStrut(25));
         contentPanel.add(inputPanel, BorderLayout.WEST);
 
         register = new JButton("Submit");

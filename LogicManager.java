@@ -2,12 +2,21 @@ import Frames.LogInFrame;
 import Frames.SignUpFrame;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class LogicManager {
+public class LogicManager extends Component {
 
 
-    private LogInFrame logInFrame;
-    private SignUpFrame signUpFrame;
+    private final LogInFrame logInFrame;
+    private final SignUpFrame signUpFrame;
+
+    public User user;
+//    private String fname;
+//    private String lname;
+//    private String username;
+//    private String password;
+//    private String confPass;
+
 
     public LogicManager(){
 
@@ -33,9 +42,7 @@ public class LogicManager {
             signUpFrame.setVisible(false);
 
         });
-        signUpFrame.getRegister().addActionListener(e -> {
-            registerUser();
-        });
+        signUpFrame.getRegister().addActionListener(e -> registerUser());
 
 
 
@@ -46,6 +53,50 @@ public class LogicManager {
     }
 
     private void registerUser() {
+        //лучше напиши массив с циклом
+
+        String email = signUpFrame.getTextFields().get(0).getText();
+        String fname = signUpFrame.getTextFields().get(1).getText();
+        String lname = signUpFrame.getTextFields().get(2).getText();
+        String username = signUpFrame.getTextFields().get(3).getText();
+        String phoneNum = signUpFrame.getTextFields().get(4).getText();
+        String password = signUpFrame.getTextFields().get(5).getText();
+        String confPass = signUpFrame.getTextFields().get(6).getText();
+        if (email.isEmpty() || fname.isEmpty() || lname.isEmpty() || username.isEmpty() ||
+                phoneNum.isEmpty() || password.isEmpty() || confPass.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Please enter all fields",
+                    "Try again",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!password.equals(confPass)) {
+            JOptionPane.showMessageDialog(this,
+                    "Confirm Password does not match",
+                    "Try again",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        user = addUserToDatabase(email,fname, lname, username, phoneNum, password);
+        if (user != null) {
+          //  dispose();
+            logInFrame.setVisible(true);
+            signUpFrame.setVisible(false);
+        }
+        else {
+            JOptionPane.showMessageDialog(this,
+                    "Failed to register new user",
+                    "Try again",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+
+
+
+
+
+
 //
 //        String name = tfName.getText();
 //        String email = tfEmail.getText();
@@ -81,6 +132,13 @@ public class LogicManager {
 //                    JOptionPane.ERROR_MESSAGE);
 //        }
 
+    }
+
+    private User addUserToDatabase(String email, String fname, String lname, String username, String phoneNum, String password) {
+
+
+
+        return null;
     }
 
 

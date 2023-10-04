@@ -1,145 +1,75 @@
 import Frames.LogInFrame;
 import Frames.SignUpFrame;
-
-import javax.swing.*;
 import java.awt.*;
+import java.sql.*;
 
 public class LogicManager extends Component {
 
+    public LogicManager() {
+        //variable to check if registration is available
+        boolean hasRegistredUsers = connectToDatabase();
+        LogInFrame logInFrame = null;
+        if (hasRegistredUsers) {
 
-    private final LogInFrame logInFrame;
-    private final SignUpFrame signUpFrame;
+            logInFrame = new LogInFrame();
 
-    public User user;
-//    private String fname;
-//    private String lname;
-//    private String username;
-//    private String password;
-//    private String confPass;
+        } else {
+            new SignUpFrame();
 
-
-    public LogicManager(){
-
-
-        logInFrame = new LogInFrame();
-        signUpFrame = new SignUpFrame();
-        signUpFrame.setVisible(false);
-
-        logInFrame.getSignUp().addActionListener(e -> {
-
-            logInFrame.setVisible(false);
-            signUpFrame.setVisible(true);
-
-        });
-        logInFrame.getLogin().addActionListener(e -> {
-
-
-        });
-
-        signUpFrame.getCancel().addActionListener(e -> {
-
-            logInFrame.setVisible(true);
-            signUpFrame.setVisible(false);
-
-        });
-        signUpFrame.getRegister().addActionListener(e -> registerUser());
-
-
-
-
-
-
-
+        }
+        assert logInFrame != null;
+        logInFrame.getSignUp().addActionListener(e -> new SignUpFrame());
     }
 
-    private void registerUser() {
-        //лучше напиши массив с циклом
+    private boolean connectToDatabase() {
+        boolean hasRegistredUsers = false;
 
-        String email = signUpFrame.getTextFields().get(0).getText();
-        String fname = signUpFrame.getTextFields().get(1).getText();
-        String lname = signUpFrame.getTextFields().get(2).getText();
-        String username = signUpFrame.getTextFields().get(3).getText();
-        String phoneNum = signUpFrame.getTextFields().get(4).getText();
-        String password = signUpFrame.getTextFields().get(5).getText();
-        String confPass = signUpFrame.getTextFields().get(6).getText();
-        if (email.isEmpty() || fname.isEmpty() || lname.isEmpty() || username.isEmpty() ||
-                phoneNum.isEmpty() || password.isEmpty() || confPass.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Please enter all fields",
-                    "Try again",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
+        final String MYSQL_SERVER_URL = "jdbc:mysql://localhost/";
+        final String DB_URL = "jdbc:mysql://localhost/MyStore?serverTimezone=UTC";
+        final String USERNAME = "root";
+        final String PASSWORD = "";
+
+        try{
+            //Connect to MYSQL server and create the database if not created
+            Connection conn = DriverManager.getConnection(MYSQL_SERVER_URL, USERNAME, PASSWORD);
+            Statement statement = conn.createStatement();
+            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS MyStore");
+            statement.close();
+            conn.close();
+
+            // Connect to the database and create the table "users" if cot created
+            conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+            statement = conn.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS users ("
+                    + "id INT( 10 ) NOT NULL PRIMARY KEY AUTO_INCREMENT,"
+                    + "email VARCHAR(200) NOT NULL UNIQUE,"
+                    + "fname VARCHAR(200) NOT NULL,"
+                    + "lname VARCHAR(200) NOT NULL,"
+                    + "username VARCHAR(200) NOT NULL,"
+                    + "phone VARCHAR(200),"
+                    + "password VARCHAR(200) NOT NULL"
+                    + ")";
+            statement.executeUpdate(sql);
+
+            //check if we have users in the table users
+            statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM users");
+
+            if (resultSet.next()) {
+                int numUsers = resultSet.getInt(1);
+                if (numUsers > 0) {
+                    hasRegistredUsers = true;
+                }
+            }
+
+            statement.close();
+            conn.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
         }
-        if (!password.equals(confPass)) {
-            JOptionPane.showMessageDialog(this,
-                    "Confirm Password does not match",
-                    "Try again",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
 
-        user = addUserToDatabase(email,fname, lname, username, phoneNum, password);
-        if (user != null) {
-          //  dispose();
-            logInFrame.setVisible(true);
-            signUpFrame.setVisible(false);
-        }
-        else {
-            JOptionPane.showMessageDialog(this,
-                    "Failed to register new user",
-                    "Try again",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-
-
-
-
-
-
-
-//
-//        String name = tfName.getText();
-//        String email = tfEmail.getText();
-//        String phone = tfPhone.getText();
-//        String address = tfAddress.getText();
-//        String password = String.valueOf(pfPassword.getPassword());
-//        String confirmPassword = String.valueOf(pfConfirmPassword.getPassword());
-//
-//        if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || address.isEmpty() || password.isEmpty()) {
-//            JOptionPane.showMessageDialog(this,
-//                    "Please enter all fields",
-//                    "Try again",
-//                    JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//
-//        if (!password.equals(confirmPassword)) {
-//            JOptionPane.showMessageDialog(this,
-//                    "Confirm Password does not match",
-//                    "Try again",
-//                    JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//
-//        user = addUserToDatabase(name, email, phone, address, password);
-//        if (user != null) {
-//            dispose();
-//        }
-//        else {
-//            JOptionPane.showMessageDialog(this,
-//                    "Failed to register new user",
-//                    "Try again",
-//                    JOptionPane.ERROR_MESSAGE);
-//        }
-
+        return hasRegistredUsers;
     }
-
-    private User addUserToDatabase(String email, String fname, String lname, String username, String phoneNum, String password) {
-
-
-
-        return null;
-    }
-
 
 }

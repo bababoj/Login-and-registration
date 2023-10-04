@@ -1,3 +1,5 @@
+package Frames;
+
 public class User {
     public String email;
     public String fname;
